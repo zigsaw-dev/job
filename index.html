@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zigsaw — Jobs</title>
+<meta name="description" content="Find jobs matched to your résumé and apply in one tap. Employers: post jobs and meet matching candidates.">
+<meta property="og:title" content="Zigsaw — Jobs">
+<meta property="og:description" content="Jobs matched to your résumé. Apply in one tap.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#4f46e5">
+<style>
+  html, body { margin: 0; height: 100%; background: #f4f5f8; font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+  #app { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+  #wait { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: #6b7280; font-size: 15px; }
+  .spin { width: 28px; height: 28px; border: 3px solid #e0e0f5; border-top-color: #4f46e5; border-radius: 50%; animation: s .8s linear infinite; }
+  @keyframes s { to { transform: rotate(360deg); } }
+  #help { display: none; text-align: center; padding: 0 24px; line-height: 1.5; }
+  #help a { color: #4f46e5; }
+</style>
+</head>
+<body>
+<div id="wait"><div class="spin"></div><div>Loading Zigsaw…</div>
+  <div id="help">Taking longer than usual.<br><a id="direct" href="#" target="_top" rel="noopener">Open the page directly</a></div>
+</div>
+<noscript><p style="padding:24px">Please enable JavaScript to use Zigsaw.</p></noscript>
+<script>
+  // ============ the ONLY line to edit: your live Apps Script /exec URL (public form, no /a/<domain>/) ============
+  var EXEC = 'https://script.google.com/macros/s/AKfycbyB9L2JMbJSa5rH8HHoCX8Wiwdtlsi1kJ8xzCGU5ceklE3IV-3fTkNzGPtsxjcW434G/exec';
+
+  // Pass ?page=job&id=… / ?page=click&t=… / ?page=resume&t=… etc. straight through to the web app.
+  var src = EXEC + (location.search || '');
+  document.getElementById('direct').href = src;
+
+  var f = document.createElement('iframe');
+  f.id = 'app';
+  f.title = 'Zigsaw';
+  f.src = src;
+  f.allow = 'clipboard-read; clipboard-write; fullscreen';   // no sandbox attribute: uploads, downloads and pop-ups must work
+  f.style.visibility = 'hidden';
+  var loaded = false;
+  f.onload = function () { loaded = true; f.style.visibility = 'visible'; document.getElementById('wait').style.display = 'none'; };
+  document.body.appendChild(f);
+  // Very slow network or a blocked frame: offer the direct link instead of an endless spinner.
+  setTimeout(function () { if (!loaded) document.getElementById('help').style.display = 'block'; }, 15000);
+</script>
+</body>
+</html>
